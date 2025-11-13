@@ -1,0 +1,115 @@
+/* Contenido del archivo ./css/index.css */
+
+/* 🟢 Estilos para que la página sea de pantalla completa (Full Screen) */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Oculta barras de desplazamiento si aparecen */
+}
+
+.full-screen-container {
+    height: 100vh; /* 100% de la altura del viewport */
+    width: 100vw; /* 100% del ancho del viewport */
+    position: relative;
+}
+
+/* Ajuste de la imagen dentro del carrusel para que actúe como fondo */
+.carousel-img {
+    height: 100%;
+    /* Hace que la imagen cubra completamente el contenedor, cortando los bordes si es necesario */
+    object-fit: cover; 
+    object-position: center;
+}
+
+/* Estilo para el título (h1) */
+.header-title {
+    color: #ffd600; 
+    text-align: center;
+    padding: 20px 10px;
+    background-color: #0101014a;
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 3.5rem; 
+}
+
+/* 🟢 Posicionamiento del contenido de texto y botones */
+
+/* Capa principal que abarca el 100% del carrusel */
+.main-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    /* Usamos Flexbox para distribuir los elementos (Título, Botones, Footer) */
+    display: flex;
+    flex-direction: column; /* Coloca los elementos uno debajo del otro */
+    justify-content: space-between; /* Empuja el título arriba, los botones al centro y el footer abajo */
+}
+
+
+/* Estilo para el pie de página */
+footer {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    background-color: #0101014a; 
+    color: white; 
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8rem; 
+    font-weight: 300;
+    width: 100%; /* Asegura que el footer ocupe el 100% del ancho */
+}
+
+/* Contenedor que se posiciona ABSOLUTAMENTE sobre el carrusel */
+.overlay-buttons {
+    /* Eliminamos las propiedades top, left y transform porque ahora el flexbox lo centra */
+    width: 90%; 
+    margin: 0 auto; /* Centra el contenedor de botones horizontalmente */
+    z-index: 10;
+    /* Ajuste para mover los botones ligeramente hacia arriba si es necesario */
+    margin-top: 55vh; 
+}
+
+/* Estilo para el botón (btn-overlay) - Mantenemos los estilos visuales */
+.btn-overlay {
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px; 
+    padding: 10px 20px;
+    width: 100%; 
+    text-transform: uppercase;
+    text-decoration: none; 
+    display: block; /* Asegura que se comporten como bloque para ocupar todo el ancho */
+}
+.btn-overlay1 {
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    border: none;
+    border-radius: 25px; 
+    padding: 10px 20px;
+    width: 100%; 
+    text-transform: uppercase;
+    text-decoration: none; 
+    display: block; /* Asegura que se comporten como bloque para ocupar todo el ancho */
+}
+.btn-overlay1:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ff0000; 
+}
+
+.btn-overlay:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ffd600; 
+}
+
+/* Eliminamos este estilo que limita el ancho del carrusel */
+/* #carouselExampleSlidesOnly {
+    max-width: 1200px;
+    margin: 0 auto;
+} */
