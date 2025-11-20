@@ -1,0 +1,15 @@
+    [
+    {
+        "id": "autor",
+        "nombre": "Fabián Zamora Méndez",
+        "rol": "Desarrollador Principal y Diseñador del sitio web",
+        "descripcion_corta": "Estudiante de segundo año de la carrera <strong>Ingeniería del Software</strong>, motivado por la seguridad vial en Costa Rica. El objetivo de esta plataforma es mitigar el riesgo de varadas en carretera mediante la tecnología.",
+        "correo": "fabzamoramendez13@gmail.com",
+        "foto_url": "./images/me.jpg"    },
+    {
+        "id": "contexto",
+        "titulo_mision": "Misión: Digitalizando la Asistencia Vial en Costa Rica",
+        "texto_institucional": "El proyecto surge como respuesta a la necesidad crítica de agilizar los servicios de auxilio en la red vial nacional, especialmente fuera del GAM. Buscamos ofrecer transparencia en costos y una respuesta de geolocalización inmediata.",
+        "frase_motivacional": "Seguridad y Transparencia en tu Ruta."
+    }
+    ]

@@ -1,0 +1,101 @@
+/* Custom Styles for Auxilio Vial CR */
+
+/* Body y HTML general */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #000000; /* Fondo general negro */
+    color: #FFFFFF; /* Color de texto predeterminado blanco */
+}
+
+/* Para que el contenido principal empuje el footer hacia abajo */
+.content-wrapper {
+    flex: 1;
+    padding-top: 56px; /* Para dejar espacio al navbar fixed-top */
+}
+
+/* Navbar personalizado */
+.navbar-dark .navbar-nav .nav-link {
+    color: #FFFFFF;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #FFD700; /* Amarillo para el link activo/hover */
+}
+
+/* Botón "Solicitar Grúa" en el navbar */
+.navbar .btn-danger {
+    background-color: #DC3545; /* Rojo de emergencia */
+    border-color: #DC3545;
+    font-weight: bold;
+}
+.navbar .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Colores para secciones específicas */
+.bg-warning {
+    background-color: #FFD700 !important; /* Nuestro amarillo brillante */
+    color: #000000 !important; /* Texto negro sobre amarillo */
+}
+
+.bg-dark {
+    background-color: #000000 !important; /* Fondo negro */
+    color: #FFFFFF !important; /* Texto blanco sobre negro */
+}
+
+/* Estilo para la tarjeta del desarrollador */
+#autor-info .card {
+    background-color: #000000; /* Fondo negro para la tarjeta */
+    border: 1px solid #FFD700; /* Borde amarillo */
+    color: #FFD700; /* Texto amarillo */
+}
+
+#autor-info .card-title {
+    color: #FFFFFF; /* Nombre en blanco */
+}
+
+#autor-info .btn-outline-warning {
+    color: #FFD700;
+    border-color: #FFD700;
+}
+#autor-info .btn-outline-warning:hover {
+    background-color: #FFD700;
+    color: #000000;
+}
+
+/* Pie de página (footer) */
+footer {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #FFD700; /* Links en el footer en amarillo */
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #FFFFFF;
+}
+
+footer .fa-brands, footer .fa-solid {
+    color: #FFD700; /* Iconos en amarillo */
+}
+/* Ajuste para que el cuerpo de la tarjeta use Flexbox vertical */
+#autor-info .card-body {
+    display: flex; /* Habilita Flexbox */
+    flex-direction: column; /* APILA los elementos verticalmente (uno debajo del otro) */
+    align-items: center; /* Centra los elementos horizontalmente */
+    text-align: center; /* Centra el texto */
+    padding-bottom: 2rem; /* Deja un poco más de espacio abajo si es necesario */
+}

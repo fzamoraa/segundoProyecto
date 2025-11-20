@@ -20,6 +20,7 @@ html, body {
     /* Hace que la imagen cubra completamente el contenedor, cortando los bordes si es necesario */
     object-fit: cover; 
     object-position: center;
+    opacity: 0.9; /* Ajusta la opacidad de la imagen del carrusel */
 }
 
 /* Estilo para el título (h1) */
@@ -30,7 +31,7 @@ html, body {
     background-color: #0101014a;
     margin-top: 0;
     font-weight: bold;
-    font-size: 3.5rem; 
+    font-size: 3.7rem; 
 }
 
 /* 🟢 Posicionamiento del contenido de texto y botones */
