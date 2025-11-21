@@ -1,0 +1,17 @@
+/* Estilos específicos para contacto.html */
+
+/* Asegura que el contenedor del mapa ocupe el espacio */
+.map-container {
+    height: 400px; /* Altura fija para el mapa */
+    overflow: hidden; /* Oculta cualquier borde o scroll del iframe */
+    border: 3px solid #FFD700; /* Borde amarillo para el mapa, siguiendo el diseño */
+}
+
+.map-container iframe {
+    /* El iframe ocupará el 100% del contenedor */
+    display: block;
+}
+
+
+/* Puedes añadir más estilos de formulario si lo deseas, 
+pero Bootstrap ya hace un buen trabajo con .form-control y .invalid-feedback */
