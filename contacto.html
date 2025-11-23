@@ -3,152 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto - Auxilio Vial CR</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/acerca-de.css"> 
-    <link rel="stylesheet" href="css/contacto.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Contacto - ASISVial</title>
     
-    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcFJxMsAAAAAC8d5iEYdp8HEHCvrV8w-PhSjnRG" async defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+            rel="stylesheet" 
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+            crossorigin="anonymous">
+            
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"> 
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="images/camion-grua.png" alt="Logo" width="30" height="30" class="me-2 rounded-circle"> Auxilio Vial CR
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">INICIO</a></li>
-                    <li class="nav-item"><a class="nav-link" href="acerca-de.html">ACERCA DE</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="contacto.html">CONTACTO</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-danger ms-lg-3" href="propuesta.html">SOLICITAR GRÚA</a></li> 
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="content-wrapper"> 
-        <header class="py-5 bg-danger text-white text-center"> 
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <h1 class="display-4">CONTÁCTANOS</h1>
-                <p class="lead">
-                    ¿Tienes dudas o necesitas información? Nuestro equipo de soporte está listo para ayudarte.
-                </p>
+                <a class="navbar-brand" href="index.html">
+                    <span class="text-warning">ASIS</span>Vial
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="acerca-de.html">Acerca de</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="planes.html">Planes y Cobertura</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="contacto.html">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </header>
+        </nav>
+    </header>
 
-        <section class="container py-5">
-            <div class="row">
-                <div class="col-md-7 mb-4">
-                    <h2 class="text-warning mb-4">Envíanos un Mensaje</h2>
-                    <form id="formulario-contacto" class="p-4 rounded shadow-lg bg-dark" novalidate>
+    <main class="container my-5">
+        <h1 class="text-center mb-5">Contáctanos</h1>
+        
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card p-4 shadow-sm">
+                    <h4 class="card-title mb-4">Envíanos un mensaje</h4>
+                    
+                    <form id="formulario-contacto" novalidate>
                         
                         <div class="mb-3">
-                            <label for="nombre" class="form-label text-white">Nombre Completo <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nombre" required>
-                            <div class="invalid-feedback">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="correo" class="form-label text-white">Correo Electrónico <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" id="correo" required>
-                            <div class="invalid-feedback">El correo es obligatorio y debe tener un formato válido (ej. correo@dominio.com).</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="asunto" class="form-label text-white">Asunto</label>
-                            <input type="text" class="form-control" id="asunto">
+                            <label for="inputNombre" class="form-label">Nombre completo (*)</label>
+                            <input type="text" class="form-control" id="inputNombre" required>
+                            <div class="invalid-feedback" id="feedbackNombre">El nombre es obligatorio.</div>
                         </div>
                         
                         <div class="mb-3">
-                            <label for="mensaje" class="form-label text-white">Mensaje <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="mensaje" rows="4" required></textarea>
-                            <div class="invalid-feedback">El mensaje es obligatorio y debe tener al menos 10 caracteres.</div>
+                            <label for="inputCorreo" class="form-label">Correo electrónico (*)</label>
+                            <input type="email" class="form-control" id="inputCorreo" required>
+                            <div class="invalid-feedback" id="feedbackCorreo">Ingresa un correo válido (ej: nombre@dominio.com).</div>
                         </div>
-
-                        <div class="mb-4">
-                            <p class="text-muted small">
-                                La seguridad del formulario está protegida por reCAPTCHA Enterprise.
-                            </p>
-                            <input type="hidden" id="recaptcha-token" name="recaptcha-token" value="">
+                        
+                        <div class="mb-3">
+                            <label for="inputAsunto" class="form-label">Asunto (Opcional)</label>
+                            <input type="text" class="form-control" id="inputAsunto">
                         </div>
-
-                        <button type="submit" class="btn btn-warning w-100 mt-3 text-dark fw-bold">Enviar Mensaje</button>
+                        
+                        <div class="mb-3">
+                            <label for="inputMensaje" class="form-label">Mensaje (*)</label>
+                            <textarea class="form-control" id="inputMensaje" rows="4" required></textarea>
+                            <div class="invalid-feedback" id="feedbackMensaje">El mensaje no puede estar vacío y debe tener al menos 10 caracteres.</div>
+                        </div>
+                        
+                        <div class="mb-4 p-3 border rounded bg-light">
+                            <label class="form-label fw-bold">Verificación de seguridad (*)</label>
+                            <div id="captcha-pregunta" class="mb-2"></div>
+                            <input type="text" class="form-control" id="inputCaptcha" placeholder="Ingresa tu respuesta aquí" required>
+                            <div class="invalid-feedback" id="feedbackCaptcha">Respuesta incorrecta. Intenta de nuevo.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
                     </form>
                 </div>
+            </div>
 
-                <div class="col-md-5">
-                    <h2 class="text-warning mb-4">Nuestra Ubicación Central</h2>
-                    <div id="mapa-contacto" class="map-container rounded shadow-lg">
+            <div class="col-lg-6">
+                <div class="card p-4 shadow-sm h-100">
+                    <h4 class="card-title mb-4">Nuestras Oficinas (Ubicación Ficticia)</h4>
+                    
+                    <div class="ratio ratio-16x9 mb-4" style="height: 300px;">
                         <iframe 
-                        src="https://www.google.com/maps?q=Universidad+T%C3%A9cnica+Nacional+Sede+Central&output=embed"
-                            title="Mapa de ubicación"
-                            width="100%" 
-                            height="400" 
-                            style="border:0;" 
+                            src="https://maps.google.com/maps?width=600&height=400&hl=en&q=sede%20central%20de%20la%20universidad%20tecnica%20nacional&t=p&z=17&ie=UTF8&iwloc=B&output=embed" 
                             allowfullscreen="" 
                             loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                            referrerpolicy="no-referrer-when-downgrade"
+                            style="border:0;"
+                        ></iframe>
                     </div>
+
+                    <h5>Datos de Contacto</h5>
+                    <p><i class="bi bi-geo-alt-fill text-warning me-2"></i>Oficinas Centrales: Universidad Técnica Nacional Sede Cental Alajuela </p>
+                    <p><i class="bi bi-telephone-fill text-warning me-2"></i>Teléfono: +506 22XX-XXXX (Simulado)</p>
+                    <p><i class="bi bi-envelope-fill text-warning me-2"></i>Email: info@asisvial.com</p>
+
                 </div>
             </div>
-        </section>
-        
-        <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content bg-dark text-white border-warning">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-warning" id="modalConfirmacionLabel">✅ Mensaje Enviado con Éxito</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+    </main>
+    
+    <div class="modal fade" id="confirmacionModal" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="confirmacionModalLabel">¡Mensaje Recibido! (Simulado)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-cuerpo-contacto">
                     </div>
-                    <div class="modal-body" id="modal-datos">
-                        </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="bg-dark text-white py-4 mt-auto">
-        <div class="container text-center">
-            <div class="row align-items-center">
-                <div class="col-12 col-md-3 text-center text-md-start mb-2 mb-md-0">
-                    <a href="#" class="text-white text-decoration-none">
-                        <i class="fab fa-facebook-f me-2"></i>FACEBOOK: AYUDA VIAL CR
-                    </a>
-                </div>
-
-                <div class="col-12 col-md-3 my-2 my-md-0 text-center">
-                    <i class="fas fa-phone-alt me-2"></i>TELÉFONO: 800-AYUDAVIAL 
-                </div>
-
-                <div class="col-12 col-md-3 my-2 my-md-0 text-center">
-                    <a href="mailto:ayudavial@gmail.com" class="text-white text-decoration-none">
-                        <i class="fas fa-envelope me-2"></i>CORREO: AYUDAVIAL@GMAIL.COM
-                    </a>
-                </div>
-
-                <div class="col-12 col-md-3 text-center text-md-end mt-2 mt-md-0">
-                    <a href="#" class="text-white text-decoration-none">
-                        <i class="fab fa-instagram me-2"></i>INSTAGRAM: @AYUDAVIALCOSTARICA
-                    </a>
-                </div>
-            </div>
-            <p class="mt-3 mb-0">© 2025 Auxilio Vial CR. Todos los derechos reservados.</p>
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 ASISVial - Proyecto ISW-512. Desarrollado con Bootstrap y JavaScript.</p>
         </div>
     </footer>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./js/contacto.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous">
+    </script>
+    
+    <script src="js/script.js"></script>
 </body>
 </html>
