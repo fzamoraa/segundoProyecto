@@ -1,0 +1,71 @@
+/* ==========================================================
+PROYECTO ISW-512: ASISVIAL
+Archivo de estilos principal
+========================================================== */
+
+/* 1. Estilos Globales y Tipografía */
+body {
+    font-family: 'Arial', sans-serif; /* Consistencia en tipografía [cite: 28] */
+    background-color: #f8f9fa; /* Color de fondo ligero */
+}
+
+/* 2. Header (Barra de Navegación) */
+.navbar {
+    border-bottom: 3px solid #ffc107; /* Línea amarilla (warning) para dar contraste */
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.text-warning {
+    color: #ffc107 !important; /* Asegura el color primario de la marca */
+}
+
+/* 3. Carrusel (index.html) */
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 5px;
+}
+
+/* Estilos para asegurar que las imágenes del carrusel se vean bien en móvil (responsivo) */
+.carousel-item img {
+    height: 400px; /* Altura fija para escritorio */
+    object-fit: cover;
+}
+
+/* Media Query para dispositivos móviles [cite: 27] */
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 250px; /* Altura menor en móvil */
+    }
+    .carousel-caption h5 {
+        font-size: 1.2rem;
+    }
+    .carousel-caption p {
+        font-size: 0.8rem;
+    }
+}
+
+/* 4. Estilos de las Tarjetas (index.html y planes.html) */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Microinteracción simple [cite: 29] */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Pequeño levantamiento al pasar el mouse */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Estilo para el plan destacado */
+.border-warning {
+    border-color: #ffc107 !important;
+}
+
+/* 5. Footer */
+footer {
+    background-color: #343a40 !important; 
+    border-top: 3px solid #ffc107; 
+}

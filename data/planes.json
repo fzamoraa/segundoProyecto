@@ -1,0 +1,41 @@
+[
+    {
+        "id": 1,
+        "nombre": "Plan Básico",
+        "precio_mensual": 12,
+        "precio_anual": 120,
+        "beneficios": [
+            "Remolque (hasta 50km)",
+            "Cambio de llanta",
+            "Suministro de gasolina (5 litros)"
+        ],
+        "destacado": false
+    },
+    {
+        "id": 2,
+        "nombre": "Plan Estándar",
+        "precio_mensual": 18,
+        "precio_anual": 180,
+        "beneficios": [
+            "Remolque (hasta 100km)",
+            "Cambio de llanta",
+            "Suministro de gasolina (sin límite)",
+            "Asistencia de cerrajería"
+        ],
+        "destacado": true
+    },
+    {
+        "id": 3,
+        "nombre": "Plan Premium",
+        "precio_mensual": 25,
+        "precio_anual": 240,
+        "beneficios": [
+            "Remolque (sin límite de km)",
+            "Cambio de llanta",
+            "Suministro de gasolina (sin límite)",
+            "Asistencia de cerrajería",
+            "Conductor sustituto"
+        ],
+        "destacado": false
+    }
+]

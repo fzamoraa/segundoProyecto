@@ -1,54 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistencia de Grúa | Inicio</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/index.css">
-</head>
-<body>
+    <title>Asistencia Vial 24/7 - Inicio</title>
     
-    <div class="full-screen-container">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+            rel="stylesheet" 
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+            crossorigin="anonymous">
+            
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
 
-        <div id="carouselExampleSlidesOnly" class="carousel slide position-relative h-100" data-bs-ride="carousel">
-            <div class="carousel-inner h-100">
-                <div class="carousel-item active h-100">
-                    <img src="./images/carro-remolcado.jpg" class="d-block w-100 carousel-img" alt="...">
-                </div>
-                <div class="carousel-item h-100">
-                    <img src="./images/Accidente-Transito (3).jpg" class="d-block w-100 carousel-img" alt="...">
-                </div>
-                <div class="carousel-item h-100">
-                    <img src="./images/grua.jpg" class="d-block w-100 carousel-img" alt="...">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <span class="text-warning">ASIS</span>Vial
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="acerca-de.html">Acerca de</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="planes.html">Planes y Cobertura</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacto.html">Contacto</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </nav>
+    </header>
 
-            <div class="main-overlay">
-                
-                <h1 class="header-title">ASISTENCIA DE GRÚAS RÁPIDA Y SEGURA EN COSTA RICA.</h1>
-
-                <div class="overlay-buttons">
-                    <div class="row w-100 justify-content-center mx-0 mb-3">
-                        <div class="col-6 col-md-4 text-center">
-                            <a href="acerca-de.html" class="btn btn-overlay">ACERCA DE</a>
-                        </div>
-                        <div class="col-6 col-md-4 text-center">
-                            <a href="contacto.html" class="btn btn-overlay">CONTACTO</a>
-                        </div>
+    <main>
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/banner1.jpg" class="d-block w-100" alt="Grúa asistiendo un carro" style="height: 400px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Tu tranquilidad, nuestra prioridad</h5>
+                        <p>Asistencia vial 24/7 en todo el territorio.</p>
                     </div>
-                    <div class="row w-100 justify-content-center mx-0">
-                        <div class="col-10 col-md-6 text-center">
-                            <a href="#" class="btn btn-overlay1">SOLICITAR GRÚA<br>(SIMULACIÓN)</a>
-                        </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/banner2.jpg" class="d-block w-100" alt="Familia segura en el carro" style="height: 400px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Cobertura total para ti y tu familia</h5>
+                        <p>Conoce nuestros planes flexibles.</p>
                     </div>
                 </div>
-                <footer>
-                    <p class="mb-0 text-uppercase">GEOLOCALIZACIÓN INSTANTÁNEA - PRECIO TRANSPARENTE - TIEMPOS DE RESPUESTA REDUCIDOS</p>
-                </footer>
+                <div class="carousel-item">
+                    <img src="img/banner3.jpg" class="d-block w-100" alt="Técnico cambiando una llanta" style="height: 400px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Servicio rápido y confiable</h5>
+                        <p>Llegamos en minutos.</p>
+                    </div>
+                </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+            <section class="container my-5 text-center">
+        <h2 class="mb-4">¿Por qué necesitas ASISVial?</h2>
+        <p class="lead">Quedar varado es una de las situaciones más estresantes. Nuestro proyecto busca dar **tranquilidad** al proporcionar planes de asistencia claros y un prototipo de cotizador funcional, eliminando la incertidumbre en un momento de crisis.</p>
+        
+        <p>Hemos ayudado a más de:</p>
+        <p id="contador-clientes" class="display-4 text-primary">0</p>
+        <p class="mb-5">clientes satisfechos.</p>
+        <hr class="my-4">
+        <h3 class="mt-5">Nuestros Planes Principales</h3>
+        <div id="planes-cards" class="row row-cols-1 row-cols-md-3 g-4">
             </div>
-    </div>
-    <script src="./js/bootstrap.bundle.min.js"></script>
+    </section>
+
+    </main>
+    
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 ASISVial - Proyecto ISW-512. Desarrollado con Bootstrap y JavaScript.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous">
+    </script>
+    
+    <script src="js/script.js"></script>
 </body>
 </html>
