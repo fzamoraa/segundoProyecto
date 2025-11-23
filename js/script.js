@@ -598,7 +598,7 @@ function validarFormularioPago(event) {
         
         const modalCuerpo = document.getElementById('modal-cuerpo-pago');
         modalCuerpo.innerHTML = `
-            <p class="lead text-success fw-bold">Se ha procesado el pago de ${params.get('costo')}.</p>
+            <p class="lead text-success fw-bold">Se ha procesado el pago de $${params.get('costo')}.</p>
             <p><strong>Plan Adquirido:</strong> ${planSeleccionado.nombre}</p>
             <p><strong>Frecuencia:</strong> ${params.get('frecuencia')}</p>
             <hr>
