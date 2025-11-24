@@ -34,6 +34,7 @@ main {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 15px;
     border-radius: 5px;
+    display: block !important; /* Asegura que el caption siempre se muestre */
 }
 /* Estilos para asegurar que las imágenes del carrusel se vean bien en móvil (responsivo) */
 .carousel-item img {
