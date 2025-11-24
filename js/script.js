@@ -510,7 +510,7 @@ async function inicializarPago() {
     
     document.getElementById('resumen-plan-pago').innerHTML = `
         <h4 class="text-primary">${planSeleccionado.nombre} (${frecuencia})</h4>
-        <h2 class="text-success display-6 fw-bold">${costo}</h2>
+        <h2 class="text-success display-6 fw-bold">$${costo}</h2>
         <p class="mb-0 small">${frecuencia === 'anual' ? 'Ahorro aplicado por pago anual.' : 'Pago mensual recurrente.'}</p>
     `;
 
