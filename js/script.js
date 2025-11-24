@@ -57,7 +57,8 @@ async function mostrarPlanesEnInicio() {
                             ${plan.beneficios.map(b => `<li>✅ ${b}</li>`).join('')}
                         </ul>
                         <button class="btn btn-primary mt-3 btn-inicio-info" 
-                                data-plan-nombre="${plan.nombre}">
+                                data-plan-nombre="${plan.nombre}"
+                                onclick="window.location.href='planes.html'">
                                 Ver Detalles
                         </button>
                     </div>
@@ -546,13 +547,13 @@ function mostrarLogoBanco() {
     let logoAlt = '';
 
     if (numero.startsWith('4')) {
-        logoSrc = 'img/visa.png'; // Asume que tienes un logo de Visa en /img/
+        logoSrc = './img/Visa.png'; // Asume que tienes un logo de Visa en /img/
         logoAlt = 'Visa';
     } else if (numero.startsWith('5')) {
-        logoSrc = 'img/mastercard.png'; // Asume que tienes un logo de Mastercard en /img/
+        logoSrc = './img/Mastercard.png'; // Asume que tienes un logo de Mastercard en /img/
         logoAlt = 'Mastercard';
     } else if (numero.startsWith('34') || numero.startsWith('37')) {
-        logoSrc = 'img/amex.png'; // Asume que tienes un logo de AMEX en /img/
+        logoSrc = './img/Amex.png'; // Asume que tienes un logo de AMEX en /img/
         logoAlt = 'American Express';
     } 
     
