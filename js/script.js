@@ -24,7 +24,6 @@ async function cargarDatosJSON(ruta) {
 
 // ==========================================================
 // 1. LÓGICA DE LA PÁGINA DE INICIO (index.html)
-// Requisito: Contenido dinámico cargado desde un archivo JSON [cite: 38]
 // ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
     // Solo ejecutar lógica de inicio si estamos en la página de inicio
@@ -72,7 +71,6 @@ async function mostrarPlanesEnInicio() {
 
 /**
  * Inicializa las interacciones mínimas de JavaScript para la página de Inicio.
- * Requisitos: Mínimo 2 interacciones con JavaScript[cite: 39].
  */
 function inicializarInteraccionesInicio() {
     // 1. Interacción: Cambio de color en botón "Ver Detalles" (Retroalimentación visual simple)
@@ -118,20 +116,16 @@ function inicializarInteraccionesInicio() {
 // ==========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ... (Tu código de index.html, contacto.html y planes.html va aquí) ...
-
     // Solo ejecutar lógica de autores si estamos en la página acerca-de.html
     if (document.getElementById('autores-container')) {
         mostrarAutores();
     }
 });
-
 /**
  * Carga los datos de los autores desde autores.json y los muestra en tarjetas.
  * (Requisito: Cargar parte del contenido dinámicamente desde JSON)
  */
 async function mostrarAutores() {
-    // Asegúrate de que tienes el archivo data/autores.json creado.
     const autores = await cargarDatosJSON('data/autores.json');
     const contenedor = document.getElementById('autores-container');
 
@@ -181,7 +175,7 @@ function asignarInteraccionAutores() {
             // 1. Mostrar/Ocultar el correo (Interacción Toggle)
             if (tooltip.classList.contains('d-none')) {
                 tooltip.classList.remove('d-none'); // Muestra el correo
-                // Opcional: Ocultarlo después de 3 segundos
+                //Ocultarlo después de 3 segundos
                 setTimeout(() => {
                     tooltip.classList.add('d-none');
                 }, 3000);
@@ -199,14 +193,11 @@ function asignarInteraccionAutores() {
 // ==========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ... (Tu código de index.html y planes.html va aquí) ...
-
     // Solo ejecutar lógica de contacto si estamos en la página contacto.html
     if (document.getElementById('formulario-contacto')) {
         inicializarContacto();
     }
 });
-
 /**
  * Inicializa la funcionalidad del formulario de contacto.
  */
@@ -225,8 +216,6 @@ function inicializarContacto() {
  * @param {string} idRespuesta - ID del elemento donde se ingresa la respuesta.
  */
 function generarCaptcha(idPregunta = 'captcha-pregunta', idRespuesta = 'inputCaptcha') {
-    // ... (Todo el código interno de la función permanece igual) ...
-
     const num1 = Math.floor(Math.random() * 10) + 1; // Número entre 1 y 10
     const num2 = Math.floor(Math.random() * 10) + 1;
     const operacion = ['+', '-'][Math.floor(Math.random() * 2)]; // Suma o Resta
@@ -341,8 +330,6 @@ function mostrarModalConfirmacion(nombre, correo, asunto, mensaje) {
 // Requisito: Mini-aplicación / Simulación simple (Cotizador)
 // ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // ... (Tu código existente para index.html va aquí) ...
-
     // Solo ejecutar lógica del cotizador si estamos en la página planes.html
     if (document.getElementById('cotizador-form')) {
         inicializarCotizador();
@@ -439,10 +426,7 @@ function calcularCotizacion() {
         <p class="text-center text-muted">Costo total por ${frecuencia === 'anual' ? 'el año' : 'mes'} del ${planSeleccionado.nombre}.</p>
     `;
     
-    // ------------------------------------------------------------------
-    // 2. NUEVA LÓGICA DE BOTÓN Y REDIRECCIÓN
-    // ------------------------------------------------------------------
-    
+    // LÓGICA DE BOTÓN Y REDIRECCIÓN
     let btnPagar = document.getElementById('btnPagarSimulado');
     
     // 1. Clonar y reemplazar el botón para eliminar cualquier event listener previo
@@ -481,8 +465,6 @@ function calcularCotizacion() {
 // Requisito: Simulación de pago, Captcha, Validación de Tarjeta/Banco.
 // ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // ... (Tu código de index.html, contacto.html y planes.html va aquí) ...
-
     // Lógica para la nueva página de Pago
     if (document.getElementById('formulario-pago')) {
         inicializarPago();
@@ -549,10 +531,7 @@ function formatearVencimiento(event) {
     input.value = valor;
 }
 /**
- * Muestra el logo del banco dependiendo de los primeros dígitos de la tarjeta (simulación).
- */
-/**
- * Muestra el logo del banco dependiendo de los primeros dígitos de la tarjeta (simulación).
+ * Muestra el logo del banco dependiendo de los primeros dígitos de la tarjeta
  */
 function mostrarLogoBanco() {
     const tarjetaInput = document.getElementById('inputTarjeta');
@@ -560,18 +539,18 @@ function mostrarLogoBanco() {
     const logoDiv = document.getElementById('logo-banco');
     logoDiv.innerHTML = ''; // Limpiar logo anterior
 
-    // Simulación de logos basados en prefijos comunes (sólo para demostración)
+    // Simulación de logos basados en prefijos comunes
     let logoSrc = '';
     let logoAlt = '';
 
     if (numero.startsWith('4')) {
-        logoSrc = './img/Visa.png'; // Asume que tienes un logo de Visa en /img/
+        logoSrc = './img/Visa.png'; // logo de Visa
         logoAlt = 'Visa';
     } else if (numero.startsWith('5')) {
-        logoSrc = './img/Mastercard.png'; // Asume que tienes un logo de Mastercard en /img/
+        logoSrc = './img/Mastercard.png'; // logo de Mastercard
         logoAlt = 'Mastercard';
     } else if (numero.startsWith('34') || numero.startsWith('37')) {
-        logoSrc = './img/Amex.png'; // Asume que tienes un logo de AMEX en /img/
+        logoSrc = './img/Amex.png'; // logo de American Express
         logoAlt = 'American Express';
     } 
     
@@ -609,16 +588,13 @@ function validarFormularioPago(event) {
         }
     };
     
-    // ----------------------------------------------------------------------
     // 1. Validación de Nombre (Requerido)
     aplicarFeedback(inputNombreTarjeta, inputNombreTarjeta.value.trim() !== '');
 
-    // ----------------------------------------------------------------------
     // 2. Validación de Tarjeta (16 dígitos)
     const numeroTarjetaLimpio = inputTarjeta.value.replace(/\s/g, '');
     aplicarFeedback(inputTarjeta, numeroTarjetaLimpio.length === 16);
 
-    // ----------------------------------------------------------------------
     // 3. Validación de Vencimiento (MM/AA, 5 caracteres, y no vencida)
     const esFormatoValido = inputVencimiento.value.match(/^(0[1-9]|1[0-2])\/\d{2}$/);
     
@@ -644,17 +620,15 @@ function validarFormularioPago(event) {
     }
 
 
-    // ----------------------------------------------------------------------
     // 4. Validación de CVC (3 o 4 dígitos)
     const cvcLimpio = inputCVC.value.replace(/\D/g, '');
     aplicarFeedback(inputCVC, cvcLimpio.length >= 3 && cvcLimpio.length <= 4);
 
-    // ----------------------------------------------------------------------
     // 5. Validación de Captcha de Pago
     if (parseInt(inputCaptcha.value.trim()) !== respuestaCaptchaCorrecta) {
     // Si la respuesta es INCORRECTA
     inputCaptcha.classList.remove('is-valid');
-    inputCaptcha.classList.add('is-invalid'); // <-- Esto pone el campo en rojo
+    inputCaptcha.classList.add('is-invalid'); //campo en rojo
     feedbackCaptcha.textContent = "Respuesta incorrecta. Por favor, intenta de nuevo."; 
     generarCaptcha('captcha-pregunta-pago', 'inputCaptchaPago'); // Regenerar Captcha
     esValido = false; // Marcar como no válido
@@ -664,10 +638,9 @@ function validarFormularioPago(event) {
     inputCaptcha.classList.add('is-valid');
 }
 
-    // ----------------------------------------------------------------------
     // --- Simular Pago Exitoso ---
     if (esValido) {
-        // ... (Tu lógica de mostrar el modal de éxito se mantiene aquí) ...
+        // mostrar el modal de éxito
         const params = new URLSearchParams(window.location.search);
         const planSeleccionado = datosPlanes.find(p => p.id == params.get('planId'));
         
