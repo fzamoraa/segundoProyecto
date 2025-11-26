@@ -44,7 +44,7 @@
 
                     <h4 class="mb-3">Simulación de Pago con Tarjeta</h4>
                     
-                    <form id="formulario-pago" novalidate>
+                    <form id="formulario-pago" class="needs-validation" novalidate>
                         
                         <div class="mb-3">
                             <label for="inputNombreTarjeta" class="form-label">Nombre en la Tarjeta (*)</label>
@@ -65,10 +65,12 @@
                             <div class="col-md-6 mb-3">
                                 <label for="inputVencimiento" class="form-label">Fecha Vencimiento (MM/AA) (*)</label>
                                 <input type="text" class="form-control" id="inputVencimiento" required placeholder="MM/AA" minlength="5" maxlength="5">
+                                <div class="invalid-feedback">Formato debe ser MM/AA.</div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="inputCVC" class="form-label">CVC (*)</label>
                                 <input type="text" class="form-control" id="inputCVC" required minlength="3" maxlength="4">
+                                <div class="invalid-feedback">Ingrese 3 o 4 dígitos.</div>
                             </div>
                         </div>
 
@@ -88,7 +90,7 @@
 
     <footer class="bg-dark text-white text-center py-3 mt-5">
         <div class="container">
-            <p class="mb-0">© 2025 ASISVial - Proyecto ISW-512. Desarrollado con Bootstrap y JavaScript.</p>
+            <p class="mb-0">&copy; 2025 ASISVial - Proyecto2 - ISW-512. Diseño de aplicaciones Web</p>
         </div>
     </footer>
 
@@ -103,7 +105,7 @@
                     <p class="lead">Simulación de pago completada con éxito.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button id="btnModalAceptar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar y volver a Planes</button>
                 </div>
             </div>
         </div>

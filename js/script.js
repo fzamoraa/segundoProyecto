@@ -519,17 +519,35 @@ async function inicializarPago() {
 
     // 4. Asignar Eventos al Formulario y Campos
     const inputTarjeta = document.getElementById('inputTarjeta');
+    const inputVencimiento = document.getElementById('inputVencimiento');
     
     // a) Mostrar logo del banco al escribir (Interacción dinámica)
     inputTarjeta.addEventListener('input', mostrarLogoBanco);
     
+    //Formato de Vencimiento Automático MM/AA
+    inputVencimiento.addEventListener('input', formatearVencimiento);
+
     // b) Validar y Simular Pago al enviar
     document.getElementById('formulario-pago').addEventListener('submit', function(event) {
         event.preventDefault();
         validarFormularioPago(event);
     });
 }
+// Formatea automáticamente el campo de vencimiento a MM/AA
+function formatearVencimiento(event) {
+    const input = event.target;
+    let valor = input.value.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+    
+    // Si el usuario borra la barra, valor.length puede ser 2, y se inserta la barra de nuevo
+    if (valor.length > 2) {
+        valor = valor.slice(0, 2) + '/' + valor.slice(2, 4);
+    } else if (valor.length === 2 && event.inputType !== 'deleteContentBackward') {
+        // Asegurar que si hay 2 dígitos, se pone la barra si no se está borrando
+        valor = valor + '/';
+    }
 
+    input.value = valor;
+}
 /**
  * Muestra el logo del banco dependiendo de los primeros dígitos de la tarjeta (simulación).
  */
@@ -567,33 +585,89 @@ function mostrarLogoBanco() {
  * Valida todos los campos del formulario de pago, incluyendo el Captcha.
  */
 function validarFormularioPago(event) {
+    event.preventDefault(); // Asegurarse de prevenir el envío por defecto
     let esValido = true;
     const form = event.target;
 
-    // --- 1. Validación de Tarjeta (16 dígitos) ---
+    // Obtener elementos
+    const inputNombreTarjeta = document.getElementById('inputNombreTarjeta');
     const inputTarjeta = document.getElementById('inputTarjeta');
-    if (inputTarjeta.value.replace(/\s/g, '').length !== 16) {
-        inputTarjeta.classList.add('is-invalid');
-        esValido = false;
-    } else {
-        inputTarjeta.classList.remove('is-invalid');
-    }
-
-    // --- 2. Validación de Captcha de Pago ---
+    const inputVencimiento = document.getElementById('inputVencimiento');
+    const inputCVC = document.getElementById('inputCVC');
     const inputCaptcha = document.getElementById('inputCaptchaPago');
-    if (parseInt(inputCaptcha.value.trim()) !== respuestaCaptchaCorrecta) {
-        inputCaptcha.classList.add('is-invalid');
-        document.getElementById('feedbackCaptchaPago').textContent = "Respuesta incorrecta. Intenta de nuevo.";
-        generarCaptcha('captcha-pregunta-pago', 'inputCaptchaPago'); // Regenerar Captcha
-        esValido = false;
-    } else {
-        inputCaptcha.classList.remove('is-invalid');
+    const feedbackCaptcha = document.getElementById('feedbackCaptchaPago'); // Para el mensaje de error
+
+    // Función auxiliar para aplicar el feedback visual de Bootstrap
+    const aplicarFeedback = (inputElement, condition) => {
+        if (condition) {
+            inputElement.classList.remove('is-invalid');
+            inputElement.classList.add('is-valid');
+        } else {
+            inputElement.classList.remove('is-valid');
+            inputElement.classList.add('is-invalid');
+            esValido = false;
+        }
+    };
+    
+    // ----------------------------------------------------------------------
+    // 1. Validación de Nombre (Requerido)
+    aplicarFeedback(inputNombreTarjeta, inputNombreTarjeta.value.trim() !== '');
+
+    // ----------------------------------------------------------------------
+    // 2. Validación de Tarjeta (16 dígitos)
+    const numeroTarjetaLimpio = inputTarjeta.value.replace(/\s/g, '');
+    aplicarFeedback(inputTarjeta, numeroTarjetaLimpio.length === 16);
+
+    // ----------------------------------------------------------------------
+    // 3. Validación de Vencimiento (MM/AA, 5 caracteres, y no vencida)
+    const esFormatoValido = inputVencimiento.value.match(/^(0[1-9]|1[0-2])\/\d{2}$/);
+    
+    // Validación adicional de fecha de vencimiento (simulación básica)
+    let estaVencida = false;
+    if (esFormatoValido) {
+        const [mes, anio] = inputVencimiento.value.split('/').map(n => parseInt(n));
+        const anioActual = new Date().getFullYear() % 100;
+        const mesActual = new Date().getMonth() + 1; // Enero = 1
+
+        if (anio < anioActual || (anio === anioActual && mes < mesActual)) {
+            estaVencida = true;
+        }
+    }
+    
+    let vencimientoOK = esFormatoValido && !estaVencida;
+    aplicarFeedback(inputVencimiento, vencimientoOK);
+    
+    if (inputVencimiento.classList.contains('is-invalid')) {
+        // Personalizar mensaje de error
+        document.getElementById('inputVencimiento').nextElementSibling.textContent = 
+            estaVencida ? "La tarjeta está vencida." : "Formato debe ser MM/AA.";
     }
 
-    // NOTA: Se pueden agregar más validaciones para CVC y Vencimiento aquí si se desea.
 
+    // ----------------------------------------------------------------------
+    // 4. Validación de CVC (3 o 4 dígitos)
+    const cvcLimpio = inputCVC.value.replace(/\D/g, '');
+    aplicarFeedback(inputCVC, cvcLimpio.length >= 3 && cvcLimpio.length <= 4);
+
+    // ----------------------------------------------------------------------
+    // 5. Validación de Captcha de Pago
+    if (parseInt(inputCaptcha.value.trim()) !== respuestaCaptchaCorrecta) {
+    // Si la respuesta es INCORRECTA
+    inputCaptcha.classList.remove('is-valid');
+    inputCaptcha.classList.add('is-invalid'); // <-- Esto pone el campo en rojo
+    feedbackCaptcha.textContent = "Respuesta incorrecta. Por favor, intenta de nuevo."; 
+    generarCaptcha('captcha-pregunta-pago', 'inputCaptchaPago'); // Regenerar Captcha
+    esValido = false; // Marcar como no válido
+    } else {
+    // Si la respuesta es CORRECTA
+    inputCaptcha.classList.remove('is-invalid'); // <-- Quitar el rojo si se corrige
+    inputCaptcha.classList.add('is-valid');
+}
+
+    // ----------------------------------------------------------------------
     // --- Simular Pago Exitoso ---
     if (esValido) {
+        // ... (Tu lógica de mostrar el modal de éxito se mantiene aquí) ...
         const params = new URLSearchParams(window.location.search);
         const planSeleccionado = datosPlanes.find(p => p.id == params.get('planId'));
         
@@ -610,5 +684,14 @@ function validarFormularioPago(event) {
         modal.show();
         form.reset(); // Limpiar formulario después de la simulación
         generarCaptcha('captcha-pregunta-pago', 'inputCaptchaPago'); // Nuevo captcha
+        // Cargar y vincular la función de redirección al nuevo botón Aceptar
+        document.getElementById('btnModalAceptar').addEventListener('click', redirigirAPlanes);
     }
+}
+/**
+ * Redirige al usuario a la página de planes.
+ * Esta función será llamada por el botón del modal de confirmación.
+ */
+function redirigirAPlanes() {
+    window.location.href = 'planes.html';
 }
