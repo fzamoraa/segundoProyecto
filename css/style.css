@@ -43,6 +43,7 @@ main {
     object-fit: cover; /* Ajusta la imagen para cubrir el espacio sin deformarla (cortará los bordes si es necesario) */
     object-position: center; /* Centra la imagen */
     margin-top: 0; /* Eliminar el margen superior de 100px que estaba causando el corte */
+    max-height: 460px; /* Altura máxima para pantallas grandes */
 }
 footer {
     background-color: #343a40 !important; 
