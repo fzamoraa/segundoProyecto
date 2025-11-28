@@ -58,7 +58,7 @@ async function mostrarPlanesEnInicio() {
                         <button class="btn btn-primary mt-3 btn-inicio-info" 
                                 data-plan-nombre="${plan.nombre}"
                                 onclick="window.location.href='planes.html'">
-                                Ver Detalles
+                                Ver Planes
                         </button>
                     </div>
                 </div>
@@ -73,7 +73,7 @@ async function mostrarPlanesEnInicio() {
  * Inicializa las interacciones mínimas de JavaScript para la página de Inicio.
  */
 function inicializarInteraccionesInicio() {
-    // 1. Interacción: Cambio de color en botón "Ver Detalles" (Retroalimentación visual simple)
+    // 1. Interacción: Cambio de color en botón "Ver Planes" (Retroalimentación visual simple)
     const botonesInfo = document.querySelectorAll('.btn-inicio-info');
     botonesInfo.forEach(btn => {
         // Al pasar el mouse, cambia el color a un estilo de advertencia.
