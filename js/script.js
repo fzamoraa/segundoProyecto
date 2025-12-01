@@ -4,6 +4,10 @@
 // ==========================================================
 // Variable global para almacenar la respuesta correcta del Captcha
 let respuestaCaptchaCorrecta; 
+let captchaErroresPago = 0;
+
+// Variable global para la instancia del modal de pago
+let modalPagoInstancia;
 /**
  * Función genérica para cargar datos desde un archivo JSON local.
  * @param {string} ruta - La ruta relativa al archivo JSON.
@@ -247,54 +251,91 @@ function generarCaptcha(idPregunta = 'captcha-pregunta', idRespuesta = 'inputCap
  * (Requisito: Validación JavaScript Intermedia)
  * @param {HTMLFormElement} form - El formulario a validar.
  */
+// ...
+let captchaErroresContacto = 0;
 function validarFormulario(form) {
     let esValido = true;
 
+    // Función auxiliar para aplicar el feedback visual de Bootstrap (is-valid/is-invalid)
+    const aplicarFeedback = (inputElement, condition) => {
+        if (condition) {
+            inputElement.classList.remove('is-invalid');
+            inputElement.classList.add('is-valid');
+        } else {
+            inputElement.classList.remove('is-valid');
+            inputElement.classList.add('is-invalid');
+            esValido = false;
+        }
+    };
+    
     // --- 1. Validación de Nombre ---
     const inputNombre = document.getElementById('inputNombre');
-    if (inputNombre.value.trim() === '') {
-        inputNombre.classList.add('is-invalid');
-        esValido = false;
-    } else {
-        inputNombre.classList.remove('is-invalid');
-    }
+    aplicarFeedback(inputNombre, inputNombre.value.trim() !== '');
 
     // --- 2. Validación de Correo ---
     const inputCorreo = document.getElementById('inputCorreo');
     const regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!regexCorreo.test(inputCorreo.value.trim())) {
-        inputCorreo.classList.add('is-invalid');
-        esValido = false;
-    } else {
-        inputCorreo.classList.remove('is-invalid');
-    }
+    aplicarFeedback(inputCorreo, regexCorreo.test(inputCorreo.value.trim()));
 
     // --- 3. Validación de Mensaje ---
     const inputMensaje = document.getElementById('inputMensaje');
-    if (inputMensaje.value.trim().length < 10) {
-        inputMensaje.classList.add('is-invalid');
-        esValido = false;
-    } else {
-        inputMensaje.classList.remove('is-invalid');
+    aplicarFeedback(inputMensaje, inputMensaje.value.trim().length >= 10);
+    
+    // Validación de Asunto (Asumo que inputAsunto existe en tu formulario)
+    const inputAsunto = document.getElementById('inputAsunto');
+    if (inputAsunto) {
+        aplicarFeedback(inputAsunto, inputAsunto.value.trim() !== '');
     }
 
-    // --- 4. Validación del Captcha ---
+
+    // --- 4. Validación del Captcha con contador de errores ---
     const inputCaptcha = document.getElementById('inputCaptcha');
-    // Convertimos la entrada a número y comparamos
+    const feedbackCaptcha = document.getElementById('feedbackCaptcha'); 
+    
     if (parseInt(inputCaptcha.value.trim()) !== respuestaCaptchaCorrecta) {
+        // Si la respuesta es INCORRECTA
         inputCaptcha.classList.add('is-invalid');
-        document.getElementById('feedbackCaptcha').textContent = "Respuesta incorrecta. Intenta de nuevo.";
-        generarCaptcha(); // Generar un nuevo captcha tras un fallo
+        inputCaptcha.classList.remove('is-valid');
+        
+        // >> LÓGICA DE CONTADOR DE ERRORES <<
+        captchaErroresContacto++; // Incrementar contador
+
+        if (captchaErroresContacto >= 3) {
+            // USAR LA NUEVA FUNCIÓN DEDICADA: mostrarModalErrorContacto
+            mostrarModalErrorContacto( 
+                "⚠️ Error de Seguridad - Bloqueo Temporal",
+                "Ha fallado el Captcha 3 veces. Hemos bloqueado el proceso de contacto por motivos de seguridad."
+            ); 
+            return; // Detener la ejecución del formulario
+        }
+
+        const intentosRestantes = 3 - captchaErroresContacto;
+        feedbackCaptcha.textContent = `Respuesta incorrecta. Intentos restantes: ${intentosRestantes}`;
+        
+        generarCaptcha('captcha-pregunta-contacto', 'inputCaptcha'); // Regenerar Captcha
         esValido = false;
+        
     } else {
+        // Si la respuesta es CORRECTA
         inputCaptcha.classList.remove('is-invalid');
+        inputCaptcha.classList.add('is-valid');
+        captchaErroresContacto = 0; // Reiniciar contador de errores
     }
 
     // --- 5. Si todo es válido, mostrar el modal de confirmación ---
     if (esValido) {
-        mostrarModalConfirmacion(inputNombre.value, inputCorreo.value, inputAsunto.value, inputMensaje.value);
-        form.reset(); // Limpiar el formulario
-        generarCaptcha(); // Generar un nuevo captcha para la próxima vez
+        const asunto = inputAsunto ? inputAsunto.value : 'Sin Asunto'; 
+        
+        // Asumo que 'mostrarModalConfirmacion' sigue siendo la función de éxito
+        mostrarModalConfirmacion(inputNombre.value, inputCorreo.value, asunto, inputMensaje.value);
+        
+        // Limpiar
+        form.reset(); 
+        form.querySelectorAll('input, textarea').forEach(input => {
+            input.classList.remove('is-valid', 'is-invalid');
+        });
+        
+        generarCaptcha('captcha-pregunta-contacto', 'inputCaptcha'); // Nuevo captcha para la próxima vez
     }
 }
 
@@ -342,6 +383,14 @@ let datosPlanes = []; // Variable global para guardar los datos del JSON
  * Inicializa el cotizador: carga datos, llena el selector y asigna eventos.
  */
 async function inicializarCotizador() {
+    // Desactivar el botón de pago inicialmente
+    const btnPagarInicial = document.getElementById('btnPagarSimulado');
+    if (btnPagarInicial) {
+        btnPagarInicial.disabled = true; 
+        btnPagarInicial.textContent = 'Selecciona un Plan para Pagar';
+        btnPagarInicial.classList.remove('btn-success', 'btn-warning');
+        btnPagarInicial.classList.add('btn-secondary');
+    }
     // 1. Cargar datos del JSON (Consumo de datos)
     datosPlanes = await cargarDatosJSON('data/planes.json');
     const selectPlan = document.getElementById('selectPlan');
@@ -502,7 +551,19 @@ async function inicializarPago() {
     // 4. Asignar Eventos al Formulario y Campos
     const inputTarjeta = document.getElementById('inputTarjeta');
     const inputVencimiento = document.getElementById('inputVencimiento');
-    
+
+    const form = document.getElementById('formulario-pago');
+    const btnPagar = form.querySelector('button[type="submit"]');
+
+    //Deshabilitar el botón de pago al cargar
+    if (btnPagar) {
+        btnPagar.disabled = true;
+    }
+    // Monitorear todos los campos para habilitar/deshabilitar el botón
+    form.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', verificarCamposPago);
+    });
+
     // a) Mostrar logo del banco al escribir (Interacción dinámica)
     inputTarjeta.addEventListener('input', mostrarLogoBanco);
     
@@ -624,19 +685,36 @@ function validarFormularioPago(event) {
     const cvcLimpio = inputCVC.value.replace(/\D/g, '');
     aplicarFeedback(inputCVC, cvcLimpio.length >= 3 && cvcLimpio.length <= 4);
 
-    // 5. Validación de Captcha de Pago
+    // 5. Validación de Captcha de Pago con contador
     if (parseInt(inputCaptcha.value.trim()) !== respuestaCaptchaCorrecta) {
-    // Si la respuesta es INCORRECTA
-    inputCaptcha.classList.remove('is-valid');
-    inputCaptcha.classList.add('is-invalid'); //campo en rojo
-    feedbackCaptcha.textContent = "Respuesta incorrecta. Por favor, intenta de nuevo."; 
-    generarCaptcha('captcha-pregunta-pago', 'inputCaptchaPago'); // Regenerar Captcha
-    esValido = false; // Marcar como no válido
+        // Si la respuesta es INCORRECTA
+        inputCaptcha.classList.remove('is-valid');
+        inputCaptcha.classList.add('is-invalid'); // campo en rojo
+        
+        // >> LÓGICA DE CONTADOR DE ERRORES <<
+        captchaErroresPago++; // Incrementar contador
+
+        if (captchaErroresPago >= 3) {
+            // Si supera los 3 intentos, redirigir
+            mostrarModalErrorCritico(
+            "⚠️ Error de Seguridad - Bloqueo Temporal",
+            "Ha fallado el Captcha 3 veces. Hemos bloqueado el proceso por motivos de seguridad."
+        );
+            return; // Detener la ejecución del formulario
+        }
+
+        const intentosRestantes = 3 - captchaErroresPago;
+        feedbackCaptcha.textContent = `Respuesta incorrecta. Intentos restantes: ${intentosRestantes}`;
+
+        generarCaptcha('captcha-pregunta-pago', 'inputCaptchaPago'); // Regenerar Captcha
+        esValido = false; // Marcar como no válido
+        
     } else {
-    // Si la respuesta es CORRECTA
-    inputCaptcha.classList.remove('is-invalid'); // <-- Quitar el rojo si se corrige
-    inputCaptcha.classList.add('is-valid');
-}
+        // Si la respuesta es CORRECTA
+        inputCaptcha.classList.remove('is-invalid');
+        inputCaptcha.classList.add('is-valid');
+        captchaErroresPago = 0; // Reiniciar contador de errores
+    }
 
     // --- Simular Pago Exitoso ---
     if (esValido) {
@@ -656,9 +734,19 @@ function validarFormularioPago(event) {
         const modal = new bootstrap.Modal(document.getElementById('pagoConfirmacionModal'));
         modal.show();
         form.reset(); // Limpiar formulario después de la simulación
+        
+        // Al resetear el formulario, también se debe resetear la validación visual
+        form.querySelectorAll('input').forEach(input => {
+            input.classList.remove('is-valid', 'is-invalid');
+        });
+        
         generarCaptcha('captcha-pregunta-pago', 'inputCaptchaPago'); // Nuevo captcha
+
         // Cargar y vincular la función de redirección al nuevo botón Aceptar
         document.getElementById('btnModalAceptar').addEventListener('click', redirigirAPlanes);
+        
+        // Deshabilitar el botón de pago después del éxito (verificarCamposPago lo habilitará si el usuario vuelve a llenar el formulario)
+        form.querySelector('button[type="submit"]').disabled = true;
     }
 }
 /**
@@ -667,4 +755,115 @@ function validarFormularioPago(event) {
  */
 function redirigirAPlanes() {
     window.location.href = 'planes.html';
+}
+function redirigirAInicio() {
+    window.location.href = 'index.html';
+}
+function verificarCamposPago() {
+    const form = document.getElementById('formulario-pago');
+    // Seleccionamos solo los campos de entrada relevantes
+    const inputs = form.querySelectorAll('input:not([type="hidden"])'); 
+    const btnPagar = form.querySelector('button[type="submit"]');
+
+    let todosLlenos = true;
+    
+    inputs.forEach(input => {
+        // Consideramos que un campo está "lleno" si tiene texto después de limpiar espacios.
+        if (input.value.trim() === '') {
+            todosLlenos = false;
+        }
+    });
+
+    if (btnPagar) {
+        btnPagar.disabled = !todosLlenos;
+    }
+}
+/**
+ * Muestra un modal de Bootstrap para errores críticos (ej. Captcha fallido 3 veces) 
+ * y configura la redirección automática al inicio.
+ */
+function mostrarModalErrorCritico(titulo, mensaje) {
+    const modalElement = document.getElementById('pagoConfirmacionModal');
+    if (!modalElement) {
+        // En caso de que el modal no exista (ej: estamos en contacto.html y no hay modal)
+        // Usamos un alert de respaldo y redirigimos.
+        alert(titulo + "\n" + mensaje + "\nSerá redirigido al inicio.");
+        redirigirAInicio();
+        return; 
+    }
+    
+    const modalTitle = modalElement.querySelector('.modal-title');
+    const modalBody = modalElement.querySelector('#modal-cuerpo-pago');
+
+    // 2. Modificar el estilo y contenido para que se vea como un error
+    modalTitle.textContent = titulo;
+    
+    // Quitar éxito (verde) y poner peligro (rojo) en el header
+    modalElement.querySelector('.modal-header').classList.remove('bg-success');
+    modalElement.querySelector('.modal-header').classList.add('bg-danger');
+
+    // Modificar el cuerpo del mensaje
+    modalBody.innerHTML = `<p class="lead text-danger fw-bold">${mensaje}</p>
+                        <p class="small">Será redirigido automáticamente a la página de inicio.</p>`;
+    
+    // 3. Modificar el footer: Reemplazar completamente por el botón de redirección
+    const modalFooter = modalElement.querySelector('.modal-footer');
+    modalFooter.innerHTML = '<button type="button" id="btnModalRedirigir" class="btn btn-danger" data-bs-dismiss="modal">Aceptar y Continuar</button>';
+    
+    // 4. Mostrar el modal
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+
+    // 5. Configurar la redirección segura (Se dispara cuando el modal se OCULTA)
+    // Esto asegura que la redirección sucede después de que el modal ha desaparecido de la pantalla.
+    modalElement.addEventListener('hidden.bs.modal', redirigirAInicio, { once: true });
+    
+    // Configurar la redirección al hacer clic en el nuevo botón (que ahora cierra el modal)
+    document.getElementById('btnModalRedirigir').addEventListener('click', () => {
+        // El botón ahora solo cierra el modal (gracias a data-bs-dismiss="modal"), 
+        // y el listener de 'hidden.bs.modal' se encarga de la redirección.
+    });
+}
+/**
+ * Muestra un modal de error específico para el formulario de Contacto 
+ * y configura la redirección automática al inicio.
+ */
+function mostrarModalErrorContacto(titulo, mensaje) {
+    // Busca los IDs específicos del formulario de contacto
+    const modalElement = document.getElementById('confirmacionModal');
+    const modalBodyId = 'modal-cuerpo-contacto';
+
+    if (!modalElement || typeof bootstrap === 'undefined') {
+        // Fallback en caso de error
+        alert(titulo + "\n" + mensaje + "\nSerá redirigido al inicio.");
+        redirigirAInicio();
+        return; 
+    }
+
+    // 1. Obtener elementos
+    const modalTitle = modalElement.querySelector('.modal-title');
+    const modalBody = document.getElementById(modalBodyId);
+    
+    // 2. Modificar el estilo y contenido para que se vea como un error
+    modalTitle.textContent = titulo;
+    
+    // Eliminar color anterior (primary) y añadir danger (rojo)
+    const header = modalElement.querySelector('.modal-header');
+    header.classList.remove('bg-primary', 'bg-success'); 
+    header.classList.add('bg-danger');
+
+    // Modificar el cuerpo del mensaje
+    modalBody.innerHTML = `<p class="lead text-danger fw-bold">${mensaje}</p>
+                        <p class="small">Será redirigido automáticamente a la página de inicio.</p>`;
+    
+    // 3. Modificar el footer: Botón rojo de redirección que cierra el modal
+    const modalFooter = modalElement.querySelector('.modal-footer');
+    modalFooter.innerHTML = '<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Aceptar y Continuar</button>';
+    
+    // 4. Mostrar el modal
+    const modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
+
+    // 5. Configurar la redirección segura: Se dispara una vez que el modal se oculta
+    modalElement.addEventListener('hidden.bs.modal', redirigirAInicio, { once: true });
 }
