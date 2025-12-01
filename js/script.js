@@ -93,8 +93,6 @@ function inicializarInteraccionesInicio() {
     });
 
     // 2. Interacción: Contador animado de Clientes Satisfechos (Efecto dinámico)
-    // Agrega un elemento <p id="contador-clientes" class="display-4 text-primary">0</p> 
-    // en tu index.html para que esto funcione.
     const elementoContador = document.getElementById('contador-clientes');
     if (elementoContador) {
         let count = 0;
@@ -281,7 +279,7 @@ function validarFormulario(form) {
     const inputMensaje = document.getElementById('inputMensaje');
     aplicarFeedback(inputMensaje, inputMensaje.value.trim().length >= 10);
     
-    // Validación de Asunto (Asumo que inputAsunto existe en tu formulario)
+    // Validación de Asunto
     const inputAsunto = document.getElementById('inputAsunto');
     if (inputAsunto) {
         aplicarFeedback(inputAsunto, inputAsunto.value.trim() !== '');
@@ -297,7 +295,7 @@ function validarFormulario(form) {
         inputCaptcha.classList.add('is-invalid');
         inputCaptcha.classList.remove('is-valid');
         
-        // >> LÓGICA DE CONTADOR DE ERRORES <<
+        //  LÓGICA DE CONTADOR DE ERRORES 
         captchaErroresContacto++; // Incrementar contador
 
         if (captchaErroresContacto >= 3) {
@@ -326,7 +324,7 @@ function validarFormulario(form) {
     if (esValido) {
         const asunto = inputAsunto ? inputAsunto.value : 'Sin Asunto'; 
         
-        // Asumo que 'mostrarModalConfirmacion' sigue siendo la función de éxito
+        //'mostrarModalConfirmacion' sigue siendo la función de éxito
         mostrarModalConfirmacion(inputNombre.value, inputCorreo.value, asunto, inputMensaje.value);
         
         // Limpiar
