@@ -83,3 +83,106 @@ footer {
     background-color: #343a40 !important; 
     border-top: 3px solid #ffc107; 
 }
+/* 5. Estilos Específicos del Blog (blog.html) */
+
+/* Estilo consistente con las tarjetas de planes */
+.blog-card {
+    border: 1px solid rgba(0, 0, 0, 0.125); /* Borde suave */
+    border-left: 5px solid #ffc107; /* Borde izquierdo con el color de acento amarillo */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+/* Imagen del Blog (usa un div con background-image para mejor control de recorte) */
+.blog-img-placeholder {
+    height: 100%; /* Toma la altura del contenedor padre */
+    background-size: cover;
+    background-position: center;
+    /* Ajuste para que la imagen tenga esquinas redondeadas en dispositivos de escritorio */
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+/* Ajuste para la vista móvil (si se carga la imagen) */
+@media (max-width: 768px) {
+    .blog-img-placeholder {
+        height: 200px; /* Altura fija para móvil */
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 0.25rem;
+    }
+}
+
+/* Estilo para los títulos dentro de los artículos */
+.blog-card .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Estilo para la paginación */
+.pagination .page-link {
+    border-color: #dee2e6; /* Borde de Bootstrap por defecto */
+    transition: background-color 0.2s;
+}
+
+.pagination .page-item:not(.active) .page-link:hover {
+    background-color: #fff3cd; /* Amarillo muy suave al pasar el mouse */
+}
+
+/* 5. Estilos Específicos del Blog (blog.html) - Sección de Filtros */
+
+/* Estilo general del elemento de la lista (base: fondo claro) */
+.categoria-item {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none; /* Quitamos bordes para que sea más limpio */
+    border-left: 5px solid transparent; /* Reserva espacio para el borde activo */
+    margin: 2px 0; /* Pequeño espacio entre elementos */
+}
+
+/* Efecto al pasar el mouse (hover) */
+.categoria-item:hover {
+    background-color: #f1f1f1 !important; /* Gris muy claro */
+    border-left: 5px solid #ffc107; /* Borde amarillo al pasar */
+}
+
+/* 🏆 ESTILO CLAVE: EL ESTADO ACTIVO (SELECCIONADO) 🏆 */
+.categoria-item.active {
+    /* Mantenemos el fondo blanco/claro (bg-light) para que el color oscuro no domine */
+    background-color: #ffffff !important; 
+    
+    /* El acento principal: Borde grueso a la izquierda con el color de la marca */
+    border-left: 5px solid #ffc107 !important;
+    
+    /* Pequeña sombra o cambio de color para enfatizar el estado activo */
+    font-weight: bold;
+}
+
+/* Asegura que el texto y el badge dentro del elemento activo se vean bien */
+.categoria-item.active a {
+    color: #343a40 !important; /* Texto gris oscuro/negro */
+}
+
+.categoria-item.active .badge {
+    /* Usamos el amarillo de acento para el contador */
+    background-color: #ffc107 !important; 
+    color: #000000 !important;
+}
+
+/* Necesario para controlar el tamaño de la imagen destacada en blog.html */
+.main-article-img {
+    max-width: 80%; 
+    height: auto;
+    display: block; 
+    margin: 0 auto 1.5rem auto; /* Centra horizontalmente */
+    border-radius: 8px; 
+}
+@media (max-width: 768px) {
+    .main-article-img {
+        max-width: 100%;
+        border: none;
+    }
+}

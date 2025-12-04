@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "titulo": "5 Consejos Esenciales de Seguridad Vial para Viajes Largos",
+        "fecha": "Diciembre, 2025",
+        "categoria": "Seguridad Vial",
+        "resumen": "Aprende a preparar tu vehículo y a ti mismo para el camino, minimizando riesgos y asegurando que tu aventura termine sin contratiempos. La prevención es la mejor asistencia.",
+        "imagen": "./img/seguridad-vial.jpg",
+        "archivo_html": "articulo-seguridad-vial.html"
+    },
+    {
+        "id": 2,
+        "titulo": "Checklist de Mantenimiento Preventivo: Evita Quedar Varado",
+        "fecha": "Diciembre, 2025",
+        "categoria": "Mantenimiento",
+        "resumen": "Una revisión regular puede ahorrarte cientos de dólares en grúa. Neumáticos, líquidos, frenos... te decimos exactamente qué revisar antes de salir de casa.",
+        "imagen": "./img/mantenimiento-preventivo.avif",
+        "archivo_html": "articulo-mantenimiento-checklist.html"
+    },
+    {
+        "id": 3,
+        "titulo": "¿Qué Hacer en Caso de Accidente Leve? Guía Rápida",
+        "fecha": "Diciembre, 2025",
+        "categoria": "Asistencia y Cobertura",
+        "resumen": "Conoce los pasos cruciales a seguir inmediatamente después de un percance menor para proteger tu seguridad y asegurar la cobertura de tu plan ASISVial.",
+        "imagen": "./img/choque-leve.jpg",
+        "archivo_html": "articulo-que-hacer-accidente.html"
+    },
+    {
+        "id": 4,
+        "titulo": "Los Peligros de Conducir con Neumáticos Desgastados",
+        "fecha": "Diciembre, 2025",
+        "categoria": "Mantenimiento",
+        "resumen": "El estado de tus neumáticos es clave para la seguridad. Identifica las señales de desgaste y cuándo es el momento crítico para reemplazarlos.",
+        "imagen": "./img/neumatico.jpg",
+        "archivo_html": "articulo-neumaticos-desgastados.html"
+    },
+    {
+        "id": 5,
+        "titulo": "La Importancia de un Kit de Emergencia en Carretera",
+        "fecha": "Diciembre, 2025",
+        "categoria": "Seguridad Vial",
+        "resumen": "Desde herramientas básicas hasta suministros médicos, te mostramos qué elementos son indispensables para cualquier conductor responsable.",
+        "imagen": "./img/kit-emergencia-maletero.jpg",
+        "archivo_html": "articulo-kit-emergencia.html"
+    }
+]

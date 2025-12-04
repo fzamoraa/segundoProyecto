@@ -108,9 +108,3 @@ footer {
     background-color: rgba(0, 0, 0, 0.9);
     color: #ffd600; 
 }
-
-/* Eliminamos este estilo que limita el ancho del carrusel */
-/* #carouselExampleSlidesOnly {
-    max-width: 1200px;
-    margin: 0 auto;
-} */

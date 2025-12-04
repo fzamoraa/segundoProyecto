@@ -865,3 +865,138 @@ function mostrarModalErrorContacto(titulo, mensaje) {
     // 5. Configurar la redirección segura: Se dispara una vez que el modal se oculta
     modalElement.addEventListener('hidden.bs.modal', redirigirAInicio, { once: true });
 }
+// ==========================================================
+// 6. LÓGICA DEL BLOG
+// ==========================================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('articulos-container')) {
+        cargarArticulosBlog();
+    }
+});
+
+let articulosData = [];
+
+/**
+ * Carga los artículos desde articulos.json y renderiza la página.
+ */
+async function cargarArticulosBlog() {
+    // Reutilizamos la función de carga genérica si está disponible
+    if (typeof cargarDatosJSON !== 'undefined') {
+        articulosData = await cargarDatosJSON('./data/articulos.json');
+        
+        if (articulosData.length > 0) {
+            renderizarCategorias(articulosData);
+            filtrarYRenderizarArticulos('Todos'); // Renderiza todos al inicio
+        } else {
+            document.getElementById('articulos-container').innerHTML = 
+                '<p class="text-center text-danger">Error: No se pudieron cargar los artículos del blog.</p>';
+        }
+    } else {
+        console.error("La función cargarDatosJSON no está definida.");
+        document.getElementById('articulos-container').innerHTML = 
+            '<p class="text-center text-danger">Error al inicializar el blog.</p>';
+    }
+}
+
+/**
+ * Genera el HTML de un solo artículo.
+ * @param {object} articulo - Objeto con los datos del artículo.
+ * @returns {string} - HTML del artículo.
+ */
+function generarArticuloHTML(articulo) {
+    return `
+        <article class="card mb-4 shadow-sm blog-card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <div class="blog-img-placeholder" style="background-image: url('${articulo.imagen}');"></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 class="card-title text-dark">${articulo.titulo}</h2>
+                        <p class="card-text text-muted small">
+                            <i class="bi bi-calendar-event"></i> ${articulo.fecha} | 
+                            <i class="bi bi-tag-fill"></i> <span class="text-warning fw-bold">${articulo.categoria}</span>
+                        </p>
+                        <p class="card-text">${articulo.resumen}</p>
+                        <a href="${articulo.archivo_html}" class="btn btn-warning btn-sm">Leer Artículo Completo <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+/**
+ * Renderiza los artículos en el contenedor principal, aplicando el filtro.
+ * @param {string} categoria - La categoría por la cual filtrar ('Todos' para mostrar todos).
+ */
+function filtrarYRenderizarArticulos(categoria) {
+    const contenedor = document.getElementById('articulos-container');
+    let articulosFiltrados = articulosData;
+
+    // Lógica de filtrado
+    if (categoria !== 'Todos') {
+        articulosFiltrados = articulosData.filter(articulo => articulo.categoria === categoria);
+    }
+    
+    if (articulosFiltrados.length === 0) {
+        contenedor.innerHTML = `<p class="text-center lead my-5">No hay artículos disponibles en la categoría: **${categoria}**.</p>`;
+        return;
+    }
+
+    // Inyectar HTML
+    const html = articulosFiltrados.map(generarArticuloHTML).join('');
+    contenedor.innerHTML = html;
+
+    // Marcar el elemento activo en el sidebar
+    document.querySelectorAll('.categoria-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelector(`[data-categoria="${categoria}"]`).classList.add('active');
+}
+
+/**
+ * Renderiza la lista de categorías en el sidebar y añade los listeners.
+ * @param {Array<object>} data - Todos los artículos.
+ */
+function renderizarCategorias(data) {
+    const categoriasLista = document.getElementById('categorias-lista');
+    const conteoCategorias = {};
+
+    // 1. Contar y obtener categorías únicas
+    data.forEach(articulo => {
+        const cat = articulo.categoria;
+        conteoCategorias[cat] = (conteoCategorias[cat] || 0) + 1;
+    });
+
+    // 2. Acumular conteo total para el botón 'Todos'
+    const totalArticulos = data.length;
+    const itemTodos = categoriasLista.querySelector('[data-categoria="Todos"]');
+    itemTodos.querySelector('.badge').textContent = totalArticulos;
+
+    // 3. Generar HTML de categorías
+    let htmlCategorias = '';
+    for (const categoria in conteoCategorias) {
+        htmlCategorias += `
+            <li class="list-group-item bg-light categoria-item" data-categoria="${categoria}">
+                <a href="#" class="text-dark text-decoration-none d-flex justify-content-between align-items-center">
+                    ${categoria}
+                    <span class="badge bg-warning text-dark">${conteoCategorias[categoria]}</span>
+                </a>
+            </li>
+        `;
+    }
+    
+    // 4. Insertar las nuevas categorías después del elemento 'Todos'
+    itemTodos.insertAdjacentHTML('afterend', htmlCategorias);
+
+
+    // 5. Añadir Event Listeners
+    document.querySelectorAll('.categoria-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const categoriaSeleccionada = item.getAttribute('data-categoria');
+            filtrarYRenderizarArticulos(categoriaSeleccionada);
+        });
+    });
+}
