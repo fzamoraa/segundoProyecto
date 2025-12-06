@@ -79,6 +79,30 @@
         <p id="contador-clientes" class="display-4 text-primary">0</p>
         <p class="mb-5">clientes satisfechos.</p>
         <hr class="my-4">
+        
+        <section class="container my-5">
+            <h3 class="mt-5 text-center">Consulta Rápida de Cobertura</h3>
+            <p class="text-center lead text-muted">Ingresa tu número de matrícula para verificar el estado de tu plan.</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card p-4 shadow-lg">
+                        <form id="form-cobertura">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-warning text-dark" id="basic-addon1">🚗 Matrícula</span>
+                                <input type="text" id="inputMatricula" class="form-control" placeholder="Ej: ABC-123 o 123456" aria-label="Matrícula" required maxlength="7">
+                                <button class="btn btn-primary" type="submit" id="btnConsultar">Consultar Estado</button>
+                            </div>
+                        </form>
+                        
+                        <div id="resultadoCobertura" class="mt-3">
+                            <p class="text-center text-muted">Esperando la consulta...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="my-4">
         <h3 class="mt-5">Nuestros Planes Principales</h3>
         <div id="planes-cards" class="row row-cols-1 row-cols-md-3 g-4">
             </div>

@@ -109,6 +109,104 @@ function inicializarInteraccionesInicio() {
             elementoContador.textContent = Math.floor(count).toLocaleString('es-CR') + '+';
         }, 10);
     }
+    
+    // 3. NUEVA INTERACCIÓN: Inicializa el buscador de cobertura (Llamada integrada)
+    inicializarBuscadorCobertura(); 
+}
+
+/**
+ * Inicializa la funcionalidad de Consulta Rápida de Cobertura.
+ * (Nueva Interacción Significativa)
+ */
+function inicializarBuscadorCobertura() {
+    const form = document.getElementById('form-cobertura');
+    const inputMatricula = document.getElementById('inputMatricula');
+    
+    if (!form) return;
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const matricula = inputMatricula.value.trim().toUpperCase();
+        
+        // Simular un tiempo de carga para el efecto dinámico
+        const resultadoDiv = document.getElementById('resultadoCobertura');
+        resultadoDiv.innerHTML = '<div class="text-center"><div class="spinner-border text-warning" role="status"><span class="visually-hidden">Cargando...</span></div> <p class="mt-2 text-muted">Verificando en base de datos...</p></div>';
+
+        // Lógica de simulación después de un breve retraso (1.5 segundos)
+        setTimeout(() => {
+            mostrarResultadoCobertura(matricula);
+        }, 1500);
+    });
+    
+    // Validar en tiempo real (solo caracteres alfanuméricos y guiones)
+    inputMatricula.addEventListener('input', function() {
+        // Forzar a mayúsculas
+        this.value = this.value.toUpperCase();
+        
+        // Simulación: Limitar a 7 caracteres alfanuméricos/guiones
+        const regex = /^[A-Z0-9-]*$/;
+        if (!regex.test(this.value)) {
+            // Eliminar el último caracter si no es válido
+            this.value = this.value.substring(0, this.value.length - 1);
+        }
+    });
+}
+
+/**
+ * Muestra el resultado de la simulación de cobertura.
+ * @param {string} matricula - La matrícula ingresada.
+ */
+function mostrarResultadoCobertura(matricula) {
+    const resultadoDiv = document.getElementById('resultadoCobertura');
+    
+    // Lógica de SIMULACIÓN:
+    let estado = 'inactivo';
+    let plan = 'N/A';
+    
+    // Criterios de simulación basados en la matrícula
+    if (matricula.endsWith('123')) {
+        plan = 'Premium';
+    } else if (matricula.startsWith('ISW') || matricula.startsWith('ABC')) {
+        estado = 'activo';
+        plan = 'Básico';
+    } else if (matricula.endsWith('000')) {
+        estado = 'pendiente';
+        plan = 'Pendiente de Pago';
+    } 
+    
+    // Generar el resultado en HTML
+    let mensajeHTML = '';
+    
+    if (estado === 'activo') {
+        mensajeHTML = `
+            <div class="alert alert-success text-center">
+                <h4 class="alert-heading">✅ ¡Matrícula ${matricula} ACTIVA!</h4>
+                <p>Cuentas con el <strong>Plan ${plan}</strong> de ASISVial.</p>
+                <hr>
+                <p class="mb-0 small">Tu cobertura está vigente 24/7. Llama al 800-ASIS-VIAL para asistencia.</p>
+            </div>
+        `;
+    } else if (estado === 'pendiente') {
+        mensajeHTML = `
+            <div class="alert alert-warning text-center">
+                <h4 class="alert-heading">⏳ Matrícula ${matricula} - PAGO PENDIENTE</h4>
+                <p>Tu plan está en estado <strong>Pendiente de Pago</strong>.</p>
+                <hr>
+                <p class="mb-0 small">Por favor, regulariza tu situación en la sección <a href="planes.html" class="alert-link">Planes y Cobertura</a>.</p>
+            </div>
+        `;
+    } else {
+        mensajeHTML = `
+            <div class="alert alert-danger text-center">
+                <h4 class="alert-heading">❌ Matrícula ${matricula} NO ENCONTRADA</h4>
+                <p>No se encontró un plan activo o registrado para esta matrícula.</p>
+                <hr>
+                <p class="mb-0 small">¿Deseas contratar un plan? Visita <a href="planes.html" class="alert-link">Planes y Cobertura</a>.</p>
+            </div>
+        `;
+    }
+    
+    resultadoDiv.innerHTML = mensajeHTML;
 }
 
 
